@@ -1,5 +1,6 @@
 let noteTitle;
 let noteText;
+let noteId;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
@@ -58,7 +59,6 @@ const renderActiveNote = () => {
     noteText.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
-    noteId.value = activeNote.id;
   } else {
     noteTitle.removeAttribute('readonly');
     noteText.removeAttribute('readonly');

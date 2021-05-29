@@ -2,6 +2,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 // const util = require('util');
 // create express server
 const app = express();
@@ -29,30 +30,40 @@ let notes = []
 
 app.post('/api/notes', (req, res) => {
     const addNote = req.body;
-    let noteID = req.body.id;
+    let noteId = req.body.id;
+    notesArr = notes.push(addNote)
+    notesArrStr = JSON.stringify(notesArr);
 
     console.log('Recieved Data from client: ', addNote);
-    console.log('Note id is: ', noteID);
+    console.log('Note id is: ', noteId);
     console.log('the array length is: ', notes.length);
 
-    
-    fs.writeFile('./db/db.json', JSON.stringify(addNote), (err) => {
+    for (let i = 0; i < notes.length; i++) {
+    if (notes.length) {
+        console.log('HEARD THIS!!')
+        console.log('if statement: ', noteId++);
+        addNote.id = uuidv4();
+    }
+    }
+    fs.readFile('./db/db.json', (err, data) => {
         if (err) {
             console.log(err);
         } else {
             for (let i = 0; i < notes.length; i++) {
-                if (noteID === notes.length)
-                console.log('You are on note number: ', noteID)
-                    noteID = noteID + 1;
+                fs.writeFile('./db/db.json', JSON.stringify(notes), 'utf8', (err) => {
+                    if (err) {
+                        console.log(err) 
+                    } else {
+                        notesArrStr = notes;
+                        console.log('Your array contains: ', notes);
+                    }
+                })
             }
-            notesArr = notes.push(addNote);
-            console.log(notes);
-        
-            res.send('Note has been added');
-            // iterate through the array checking the id number of the object, to each new object add array length + 1
         }
     })
 })
+
+
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
