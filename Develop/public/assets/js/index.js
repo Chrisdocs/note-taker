@@ -75,6 +75,7 @@ const handleNoteSave = () => {
     id: 0
   };
   saveNote(newNote).then(() => {
+    console.log('This is running!');
     getAndRenderNotes();
     renderActiveNote();
   });

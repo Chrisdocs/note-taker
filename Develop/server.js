@@ -23,27 +23,26 @@ app.get('/', (req,res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/notes.html'));
+        res.sendFile(path.join(__dirname, './db/db.json'));
 });
 
 let notes = []
 
 app.post('/api/notes', (req, res) => {
     const addNote = req.body;
-    let noteId = req.body.id;
     notesArr = notes.push(addNote)
     notesArrStr = JSON.stringify(notesArr);
 
-    console.log('Recieved Data from client: ', addNote);
-    console.log('Note id is: ', noteId);
-    console.log('the array length is: ', notes.length);
+    // console.log('Recieved Data from client: ', addNote);
+    // console.log('Note id is: ', noteId);
+    // console.log('the array length is: ', notes.length);
 
     for (let i = 0; i < notes.length; i++) {
     if (notes.length) {
-        console.log('HEARD THIS!!')
-        console.log('if statement: ', noteId++);
+        // console.log('HEARD THIS!!')
+        // console.log('if statement: ', noteId++);
         addNote.id = uuidv4();
-    }
+        }
     }
     fs.readFile('./db/db.json', (err, data) => {
         if (err) {
@@ -54,14 +53,15 @@ app.post('/api/notes', (req, res) => {
                     if (err) {
                         console.log(err) 
                     } else {
-                        notesArrStr = notes;
                         console.log('Your array contains: ', notes);
+                        res.send({sucess: true});
                     }
                 })
             }
         }
     })
 })
+
 
 
 
